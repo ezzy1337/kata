@@ -9,7 +9,6 @@ from .linked_list import (
 from .node import Node
 from .exceptions import NodeNotFoundException
 
-
 ########################################
 #       Singly Linked List Tests       #
 ########################################
@@ -28,7 +27,7 @@ def test_sl_add_to_empty_list():
     actual = subject.add(node)
 
     # assert
-    assert actual == 'a'
+    assert actual == node
     assert subject == ['a']
 
 
@@ -47,7 +46,7 @@ def test_sl_add_to_populated_list():
     actual = subject.add(new_node)
 
     # assert
-    assert actual == 'new'
+    assert actual == new_node
     assert subject == ['existing', 'new']
 
 
@@ -63,27 +62,29 @@ def test_sl_remove_empty_list():
 def test_sl_remove_first_item_in_list():
     # arrange
     subject = LinkedList()
-    subject.add(Node('a'))
+    node = Node('a')
+    subject.add(node)
 
     # act
-    actual = subject.remove('a')
-    
+    actual = subject.remove(node)
+
     # assert
-    assert actual == 'a'
+    assert actual == node
     assert subject == []
 
 
 def test_sl_remove_first_item_in_populated_list():
     # arrange
     subject = LinkedList()
-    subject.add(Node('first'))
+    remove_node = Node('first')
+    subject.add(remove_node)
     subject.add(Node('second'))
 
     #act
-    actual = subject.remove('first')
+    actual = subject.remove(remove_node)
     
     # assert
-    assert actual == 'first'
+    assert actual == remove_node
     assert subject.as_list() == ['second']
     assert subject == ['second']
 
@@ -92,11 +93,12 @@ def test_sl_remove_item_in_middle_of_list():
     # arrange
     subject = LinkedList()
     subject.add(Node('a'))
-    subject.add(Node('b'))
+    remove_node = Node('b')
+    subject.add(remove_node)
     subject.add(Node('c'))
 
     # act/assert
-    assert subject.remove('b') == 'b'
+    assert subject.remove(remove_node) == remove_node
     assert subject == ['a', 'c']
 
 
@@ -104,10 +106,11 @@ def test_sl_remove_last_item_in_the_list():
     # arrange
     subject = LinkedList()
     subject.add(Node('a'))
-    subject.add(Node('b'))
+    remove_node = Node('b')
+    subject.add(remove_node)
 
     # act/assert
-    assert subject.remove('b') == 'b'
+    assert subject.remove(remove_node) == remove_node
     assert subject == ['a']
 
 
@@ -115,12 +118,14 @@ def test_sl_remove_node_that_appears_multiple_times():
     # arrange
     subject = LinkedList()
     subject.add(Node('a'))
-    subject.add(Node('b'))
-    subject.add(Node('b'))
+    dup_value_node1 = Node('b')
+    dup_value_node2 = Node('b')
+    subject.add(dup_value_node1)
+    subject.add(dup_value_node2)
     subject.add(Node('c'))
 
     # act/assert
-    assert subject.remove('b') == 'b'
+    assert subject.remove(dup_value_node1) == dup_value_node1
     assert subject == ['a', 'b', 'c']
 
 
@@ -163,7 +168,6 @@ def test_dl_add_to_populated_list():
 def test_dl_remove_empty_list():
     # arrange
     subject = DoublyLinkedList()
-
     #act
     subject.remove('dne')
 
@@ -197,7 +201,7 @@ def test_dl_remove_last_item():
     assert subject.as_list() == ['first']
     assert subject == ['first']
 
-
+#16
 def test_dl_remove_item_in_middle_of_list():
     # arrange
     subject = DoublyLinkedList()
@@ -242,12 +246,13 @@ def test_cl_construct_empty_list():
 def test_cl_add_to_empty_list():
     # arrange
     subject = CircularList()
+    nodeA = Node('a')
 
     #act
-    actual = subject.add(Node('a'))
+    actual = subject.add(nodeA)
 
     # assert
-    assert actual.value == 'a'
+    assert actual == node
     assert subject == ['a']
 
 
@@ -255,26 +260,28 @@ def test_cl_add_to_populated_list():
     # arrange
     subject = CircularList()
     subject.add(Node('a'))
+    nodeB = Node('b')
 
     #act
-    actual = subject.add(Node('b'))
+    actual = subject.add(nodeB)
 
     # assert
-    assert actual.value == 'b'
+    assert actual == nodeB
     assert subject == ['a', 'b']
 
-
+#21
 def test_cl_add_to_list_of_2_plus():
     # arrange
     subject = CircularList()
     subject.add(Node('a'))
     subject.add(Node('b'))
+    nodeC = Node('c')
     
     #act
-    actual = subject.add(Node('c'))
+    actual = subject.add(nodeC)
 
     # assert
-    assert actual.value == 'c'
+    assert actual == nodeC
     assert subject.as_list() == ['a', 'b', 'c']
     assert subject == ['a', 'b', 'c']
 
@@ -282,35 +289,38 @@ def test_cl_add_to_list_of_2_plus():
 def test_cl_remove_empty_list():
     # arrange
     subject = CircularList()
+    node = Node('dne')
 
     # assert
-    assert subject.remove('dne') is None
+    assert subject.remove(node) is None
 
 
 def test_cl_remove_only_item():
     # arrange
     subject = CircularList()
-    subject.add(Node('a'))
+    nodeA = Node('a')
+    subject.add(nodeA)
 
     #act
-    actual = subject.remove('a')
+    actual = subject.remove(NodeA)
 
     # assert
-    assert actual.value == 'a'
+    assert actual == NodeA
     assert subject == []
 
 
 def test_cl_remove_first_item_in_list():
     # arrange
     subject = CircularList()
-    subject.add(Node('a'))
+    nodeA = Node('a')
+    subject.add(NodeA)
     subject.add(Node('b'))
 
     #act
-    actual = subject.remove('a')
+    actual = subject.remove(nodeA)
 
     # assert
-    assert actual.value == 'a'
+    assert actual== nodeA
     assert subject == ['b']
 
 
@@ -318,15 +328,15 @@ def test_cl_remove_last_item_in_list():
     # arrange
     subject = CircularList()
     subject.add(Node('a'))
-    subject.add(Node('b'))
+    nodeB = Node('b')
+    subject.add(nodeB)
 
     #act
-    actual = subject.remove('b')
+    actual = subject.remove(NodeB)
 
     # assert
-    assert actual.value == 'b'
+    assert actual == nodeB
     assert subject == ['a']
-
 
 def test_cl_remove_item_from_middle_of_list():
     # arrange
@@ -334,15 +344,16 @@ def test_cl_remove_item_from_middle_of_list():
     subject.add(Node('a'))
     subject.add(Node('b'))
     subject.add(Node('c'))
-    subject.add(Node('d'))
+    nodeD = Node('d')
+    subject.add(nodeD)
     subject.add(Node('e'))
     subject.add(Node('f'))
 
     #act
-    actual = subject.remove('d')
+    actual = subject.remove(nodeD)
 
     # assert
-    assert actual.value == 'd'
+    assert actual == nodeD
     assert subject == ['a', 'b', 'c', 'e', 'f']
 
 ########################################
